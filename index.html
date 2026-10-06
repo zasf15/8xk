@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KSR Gateway | بوابة الوصول السريع</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111726;
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --text: #cbd5e1;
+      --text-bright: #f8fafc;
+      --border: #1e293b;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .brand-logo {
+      font-size: 1.8em;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      text-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .card h2 {
+      color: var(--text-bright);
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 1.35em;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.88em;
+      color: #94a3b8;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-bright);
+      outline: none;
+      font-size: 0.95em;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    button.btn-primary {
+      width: 100%;
+      padding: 13px;
+      background: var(--accent);
+      color: #030712;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button.btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    button.btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.85em;
+      cursor: pointer;
+      color: var(--accent);
+      transition: opacity 0.2s;
+    }
+
+    .toggle-link:hover {
+      opacity: 0.8;
+    }
+
+    /* الداشبورد */
+    .dashboard-container {
+      display: none;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .user-info h3 {
+      color: var(--text-bright);
+      font-size: 1.4em;
+    }
+
+    .role-badge {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.75em;
+      padding: 2px 8px;
+      background: #1e293b;
+      border-radius: 4px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .btn-logout {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+      border: 1px solid var(--danger);
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 0.88em;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .grid-title {
+      font-size: 1.1em;
+      margin-bottom: 16px;
+      color: var(--text-bright);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .app-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-bright);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .app-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .app-icon {
+      font-size: 2.2em;
+    }
+
+    .app-name {
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+
+    /* التذييل والحقوق */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.82em;
+      color: #64748b;
+    }
+
+    footer span {
+      color: var(--accent);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="brand-logo">KSR // GATEWAY</div>
+
+  <!-- واجهة المصادقة -->
+  <div id="authCard" class="card">
+    <h2 id="formTitle">تسجيل الدخول للمنصة</h2>
+    <div class="input-group">
+      <label>اسم المستخدم</label>
+      <input type="text" id="username" placeholder="اسمك المسجل">
+    </div>
+    <div class="input-group">
+      <label>كلمة المرور</label>
+      <input type="password" id="password" placeholder="••••••••">
+    </div>
+    <button class="btn-primary" id="btnSubmit" onclick="handleSubmit()">دخول</button>
+    <div class="toggle-link" id="toggleMode" onclick="switchAuthMode()">ليس لديك حساب؟ إنشاء حساب جديد</div>
+  </div>
+
+  <!-- لوحة التحكم -->
+  <div id="dashboard" class="dashboard-container">
+    <div class="dashboard-header">
+      <div class="user-info">
+        <h3 id="welcomeUser">أهلاً بك</h3>
+        <span class="role-badge" id="userRoleBadge">مستخدم</span>
+      </div>
+      <button class="btn-logout" onclick="logout()">خروج</button>
+    </div>
+
+    <div class="grid-title">التطبيقات والخدمات السحابية:</div>
+    <div class="links-grid" id="appsGrid"></div>
+  </div>
+
+  <footer>
+    نظام البوابة السحابية المخصص &bull; تطوير وتصميم <span>KSR</span> &copy; 2026
+  </footer>
+
+  <script>
+    let isLoginMode = true;
+
+    function switchAuthMode() {
+      isLoginMode = !isLoginMode;
+      document.getElementById('formTitle').innerText = isLoginMode ? 'تسجيل الدخول للمنصة' : 'إنشاء حساب جديد';
+      document.getElementById('btnSubmit').innerText = isLoginMode ? 'دخول' : 'إنشاء الحساب';
+      document.getElementById('toggleMode').innerText = isLoginMode 
+        ? 'ليس لديك حساب؟ إنشاء حساب جديد' 
+        : 'لديك حساب بالفعل؟ تسجيل الدخول';
+    }
+
+    async function handleSubmit() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) {
+        return alert('يرجى ملء الحقول المطلوبة');
+      }
+
+      const endpoint = isLoginMode ? '/api/login' : '/api/register';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.error || 'حدث خطأ في المعالجة');
+        } else {
+          if (!isLoginMode) {
+            alert('تم تسجيل الحساب بنجاح! يمكنك الآن تسجيل الدخول.');
+            switchAuthMode();
+          } else {
+            loadDashboard();
+          }
+        }
+      } catch (err) {
+        alert('تعذر الاتصال بالخادم، تأكد من اتصال الإنترنت.');
+      }
+    }
+
+    async function loadDashboard() {
+      try {
+        const res = await fetch('/api/dashboard');
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('authCard').style.display = 'none';
+          document.getElementById('dashboard').style.display = 'block';
+          document.getElementById('welcomeUser').innerText = `أهلاً، ${data.user.username}`;
+          document.getElementById('userRoleBadge').innerText = data.user.role.toUpperCase();
+
+          const grid = document.getElementById('appsGrid');
+          grid.innerHTML = data.links.map(link => `
+            <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="app-card">
+              <div class="app-icon">${link.icon}</div>
+              <div class="app-name">${link.title}</div>
+            </a>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function logout() {
+      await fetch('/api/logout', { method: 'POST' });
+      location.reload();
+    }
+
+    // التحقق التلقائي من وجود جلسة مفعلة
+    loadDashboard();
+  </script>
+</body>
+</html>
